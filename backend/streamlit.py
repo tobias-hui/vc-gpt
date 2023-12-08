@@ -11,6 +11,16 @@ from app.xml_agent import agent_executor as agent
 #     VCGPT 是一款先进的聊天助手，专为帮助创业者和初创企业经理快速有效地撰写商业计划而设计。
 #     """)
 
+st.set_page_config(
+    page_title='VCGPT-Agent',
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    }
+)
+
 
 #st.markdown('<img src="https://i.ibb.co/Wncjq6P/vcgpt-01-removebg-preview.png" width="150" height="50">', unsafe_allow_html=True)
 st.image("https://i.ibb.co/xgWdnrz/vcgpt-01-removebg-preview.png", width=150)
