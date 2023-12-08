@@ -1,10 +1,10 @@
 import streamlit as st
 from langchain.callbacks import StreamlitCallbackHandler
-from app.agent import agent_executor as agent
+from app.xml_agent import agent_executor as agent
 
 with st.sidebar:
     # 显示 VCGPT logo
-    st.image("https://i.ibb.co/WnSYxy2/20231205001508.png", width=150)  # 替换 "vcgpt_logo_url" 为实际的图片 URL
+    st.image("https://i.ibb.co/SNKTtbt/vcgpt-logo-removebg-preview.png", width=66)  # 替换 "vcgpt_logo_url" 为实际的图片 URL
 
     # VCGPT 简介
     st.markdown("## VCGPT")

@@ -1,22 +1,23 @@
 from app.config import Settings
+from app.agent.agent_tools import generate_bp_pdf
 
 settings = Settings()
 
-from typing import List, Tuple, Optional
+from typing import List, Tuple
 
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain.chat_models import ChatOpenAI
 from langchain.tools.render import render_text_description
-from langchain.agents import initialize_agent, load_tools
+from langchain.agents import load_tools
 from langchain.schema import AIMessage, HumanMessage
 from langchain.agents.format_scratchpad import format_log_to_str
-from langchain.agents.output_parsers import ReActJsonSingleInputOutputParser
 from langchain.agents import AgentExecutor
-from langchain.tools import DuckDuckGoSearchRun
+from langchain.tools import DuckDuckGoSearchRun, Tool
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.agents.openai_functions_agent.agent_token_buffer_memory import AgentTokenBufferMemory
-from .prompts import conversational_prompt, parse_output
-from langchain.prompts import MessagesPlaceholder
+from app.agent.prompts import conversational_prompt, parse_output
+# import langchain
+# langchain.debug = True
 
 def _format_chat_history(chat_history: List[Tuple[str, str]]):
     buffer = []
@@ -37,6 +38,18 @@ search = DuckDuckGoSearchRun()
 memory = AgentTokenBufferMemory(llm=llm, memory_key=memory_key)
 
 tools = load_tools(["dalle-image-generator", "llm-math"], llm=llm)
+tools = tools + [
+    Tool(
+        name = "search",
+        func = search.run,
+        description = "useful for when you need to answer questions about current events",
+    ),
+    Tool.from_function(
+        name = "generate_bp_pdf",
+        func = generate_bp_pdf.run,
+        description = "generate business plan pdf",
+    )
+]
 
 #prompt = hub.pull("hwchase17/react-json")
 prompt = conversational_prompt

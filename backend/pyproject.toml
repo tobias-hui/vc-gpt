@@ -19,6 +19,7 @@ langchainhub = "^0.1.14"
 langserve = {extras = ["all"], version = "^0.0.32"}
 pydantic = "1.10.13"
 streamlit = "^1.29.0"
+pyjwt = "^2.8.0"
 
 
 [build-system]
